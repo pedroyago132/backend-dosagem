@@ -7,7 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const apiKey = 'sk_test_7fdc9c80292541db910c7a1b9abcec2c';
 
 // Rota para gerar o card_hash
 app.post('/api/generate-card-hash', async (req, res) => {
@@ -18,7 +17,7 @@ app.post('/api/generate-card-hash', async (req, res) => {
   }
 
   try {
-    const client = await pagarme.client.connect({ encryption_key: apiKey });
+    const client = await pagarme.client.connect({ encryption_key: 'sk_test_7fdc9c80292541db910c7a1b9abcec2c' });
 
     const card_hash = await client.security.encrypt({
       card_number,
@@ -37,7 +36,7 @@ app.post('/api/generate-card-hash', async (req, res) => {
 // Rota para criar um pagamento
 app.post('/api/create-payment', async (req, res) => {
   try {
-    const client = await pagarme.client.connect({ api_key: apiKey });
+    const client = await pagarme.client.connect({ api_key: 'sk_test_7fdc9c80292541db910c7a1b9abcec2c' });
 
     const paymentLinkData = {
       amount: 21000,
@@ -88,7 +87,7 @@ app.post('/api/create-payment', async (req, res) => {
 // Rota para listar links de pagamento
 app.get('/api/list-links', async (req, res) => {
   try {
-    const client = await pagarme.client.connect({ api_key: apiKey });
+    const client = await pagarme.client.connect({ api_key: 'sk_test_7fdc9c80292541db910c7a1b9abcec2c' });
     const paymentLinks = await client.paymentLinks.all();
 
     res.status(200).json(paymentLinks);
@@ -103,7 +102,7 @@ app.get('/api/payment-link-status/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
-    const client = await pagarme.client.connect({ api_key: apiKey });
+    const client = await pagarme.client.connect({ api_key: 'sk_test_7fdc9c80292541db910c7a1b9abcec2c' });
     const paymentLink = await client.paymentLinks.find({ id });
 
     res.status(200).json(paymentLink);
